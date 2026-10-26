@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Details - RentDrive</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Dynamic Navbar -->
+  <div id="navbar-container"></div>
+
+  <main class="main-content">
+    <div style="margin-bottom: 1.5rem;">
+      <a href="vehicles.html" style="text-decoration: none; color: var(--primary); font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+        ← Back to Fleet
+      </a>
+    </div>
+
+    <div id="details-alert"></div>
+
+    <!-- Vehicle Details Container (Populated via vehicle-details.js) -->
+    <div id="vehicle-details-container">
+      <div style="text-align: center; padding: 4rem; color: var(--text-muted);">
+        Loading vehicle details...
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 RentDrive Online Vehicle Rental System • College SE Project</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/vehicle-details.js"></script>
+</body>
+</html>

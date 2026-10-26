@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Vehicles - RentDrive</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Dynamic Navbar -->
+  <div id="navbar-container"></div>
+
+  <main class="main-content">
+    <div class="section-header">
+      <h1 class="section-title">Explore Our Fleet</h1>
+      <p class="section-desc">Select from our wide range of clean, certified cars and motorbikes.</p>
+    </div>
+
+    <!-- City & Date Availability Search Bar -->
+    <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);">
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;">
+        <div style="flex: 1; min-width: 170px;">
+          <label for="city-select" class="form-label" style="margin-bottom: 0.35rem; font-size: 0.88rem;">📍 Select City</label>
+          <select id="city-select" class="form-control">
+            <option value="All">All Cities</option>
+          </select>
+        </div>
+        <div style="flex: 1; min-width: 160px;">
+          <label for="pickup-date" class="form-label" style="margin-bottom: 0.35rem; font-size: 0.88rem;">📅 Pickup Date</label>
+          <input type="date" id="pickup-date" class="form-control" />
+        </div>
+        <div style="flex: 1; min-width: 160px;">
+          <label for="return-date" class="form-label" style="margin-bottom: 0.35rem; font-size: 0.88rem;">📅 Return Date</label>
+          <input type="date" id="return-date" class="form-control" />
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
+          <button id="check-availability-btn" class="btn btn-primary" type="button">
+            Check Availability
+          </button>
+          <button id="reset-dates-btn" class="btn btn-outline" type="button" style="display: none;">
+            Reset
+          </button>
+        </div>
+      </div>
+      <div id="availability-status" style="margin-top: 0.75rem; font-size: 0.88rem; display: none;"></div>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="filter-bar">
+      <div style="flex: 1; min-width: 200px;">
+        <input 
+          type="text" 
+          id="search-input" 
+          class="form-control" 
+          placeholder="🔍 Search by name or model (e.g. City, Fortuner, Thar)..."
+        />
+      </div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button class="filter-btn active" data-type="All">All Fleet</button>
+        <button class="filter-btn" data-type="Sedan">Sedan</button>
+        <button class="filter-btn" data-type="SUV">SUV</button>
+        <button class="filter-btn" data-type="Hatchback">Hatchback</button>
+        <button class="filter-btn" data-type="Luxury">Luxury</button>
+        <button class="filter-btn" data-type="Bike">Motorbike</button>
+      </div>
+    </div>
+
+    <!-- Vehicles Grid -->
+    <div class="vehicles-grid" id="vehicles-container">
+      <!-- Populated via vehicles.js -->
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 RentDrive Online Vehicle Rental System • College SE Project</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/vehicles.js"></script>
+</body>
+</html>

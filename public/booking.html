@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserve Vehicle - RentDrive</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Dynamic Navbar -->
+  <div id="navbar-container"></div>
+
+  <main class="main-content">
+    <div class="section-header">
+      <a href="vehicles.html" style="text-decoration: none; color: var(--primary); font-weight: 600; font-size: 0.9rem;">← Back to Fleet</a>
+      <h1 class="section-title" style="margin-top: 0.5rem;">Configure Your Rental</h1>
+      <p class="section-desc">Select your rental dates, verify real-time availability, and complete reservation.</p>
+    </div>
+
+    <!-- Alert Container -->
+    <div id="booking-alert"></div>
+
+    <div class="booking-layout">
+      <!-- Date Selection Form -->
+      <div class="auth-card" style="margin: 0; max-width: none;">
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--secondary);">Rental Duration</h2>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="start-date">Pickup Date</label>
+            <input type="date" id="start-date" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="end-date">Drop-off Date</label>
+            <input type="date" id="end-date" class="form-control" required>
+          </div>
+        </div>
+
+        <div style="background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; margin-top: 1rem;">
+          <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.3rem;">ℹ️ Overlap Protection Policy</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            Our system cross-references active reservations to prevent double-booking. If the selected car is already booked on any chosen date, you will be notified immediately.
+          </p>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <button id="open-payment-btn" class="btn btn-primary btn-block">
+            Proceed to Payment
+          </button>
+        </div>
+      </div>
+
+      <!-- Price Breakdown / Vehicle Summary -->
+      <div>
+        <div class="summary-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--secondary);">Rental Summary</h3>
+          
+          <div id="selected-vehicle-preview">
+            <!-- Populated via booking.js -->
+          </div>
+
+          <div class="summary-row">
+            <span style="color: var(--text-muted);">Daily Rate:</span>
+            <span style="font-weight: 600;" id="summary-rate">₹0</span>
+          </div>
+
+          <div class="summary-row">
+            <span style="color: var(--text-muted);">Total Duration:</span>
+            <span style="font-weight: 600;" id="summary-days">1 Day(s)</span>
+          </div>
+
+          <div class="summary-row">
+            <span style="color: var(--text-muted);">Taxes & Insurance:</span>
+            <span style="font-weight: 600; color: var(--success);">Included (Free)</span>
+          </div>
+
+          <div class="summary-total">
+            <span>Total Payable:</span>
+            <span class="total-amount" id="summary-total">₹0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Simulated Payment Modal -->
+  <div class="modal-overlay" id="payment-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--secondary);">💳 Simulated Payment Checkout</h3>
+        <button class="modal-close" id="close-modal-btn">&times;</button>
+      </div>
+
+      <div style="background-color: var(--primary-light); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem;">
+        <div style="font-size: 0.88rem; color: var(--text-muted);">Reserving:</div>
+        <div style="font-weight: 700; color: var(--secondary);" id="modal-vehicle-title">Vehicle</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;" id="modal-dates">Dates</div>
+        <div style="font-size: 1.15rem; font-weight: 800; color: var(--primary); margin-top: 0.4rem;">
+          Payable Amount: <span id="modal-amount">₹0</span>
+        </div>
+      </div>
+
+      <form id="simulated-payment-form">
+        <div class="form-group">
+          <label class="form-label">Select Payment Method</label>
+          <div style="display: flex; gap: 1rem; margin-top: 0.4rem;">
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; cursor: pointer;">
+              <input type="radio" name="payment_method" value="Card" checked> Credit/Debit Card
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; cursor: pointer;">
+              <input type="radio" name="payment_method" value="UPI"> UPI / QR
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="payment-info">Dummy Card Number or UPI ID</label>
+          <input 
+            type="text" 
+            id="payment-info" 
+            class="form-control" 
+            placeholder="e.g. 4532 8920 1234 5678 or user@okaxis" 
+            value="4532 8920 1234 5678" 
+            required
+          />
+          <span class="form-note">Educational simulation mode — no actual charge occurs.</span>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-outline btn-block" id="cancel-payment-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-block" id="confirm-pay-btn">Simulate Payment & Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2026 RentDrive Online Vehicle Rental System • College SE Project</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/booking.js"></script>
+</body>
+</html>
